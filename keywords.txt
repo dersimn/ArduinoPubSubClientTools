@@ -12,9 +12,9 @@ PubSubClientTools	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-publish KEYWORD2
-subscribe KEYWORD2
-resubscribe KEYWORD2
+publish	KEYWORD2
+subscribe	KEYWORD2
+resubscribe	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
