@@ -5,6 +5,24 @@ PubSubClientTools::PubSubClientTools(PubSubClient& _pubSub) {
 	pubSub->setCallback(mqtt_callback);
 };
 
+bool PubSubClientTools::connect(String clientId) {
+	char client_char[CLIENTID_BUFFER_SIZE];
+	clientId.toCharArray(client_char, CLIENTID_BUFFER_SIZE);
+	return pubSub->connect(client_char);
+}
+
+bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage) {
+	char client_char[CLIENTID_BUFFER_SIZE];
+	char topic_char[TOPIC_BUFFER_SIZE];
+	char msg_char[MESSAGE_BUFFER_SIZE];
+
+	clientId.toCharArray(client_char, CLIENTID_BUFFER_SIZE);
+	willTopic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
+	willMessage.toCharArray(msg_char, MESSAGE_BUFFER_SIZE);
+
+	return pubSub->connect(client_char, topic_char, willQoS, willRetain, msg_char);
+}
+
 void PubSubClientTools::publish(String topic, String message) {
 	topic = prefix_publish+topic;
 

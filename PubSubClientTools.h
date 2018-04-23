@@ -11,6 +11,7 @@
 #include "PubSubClient.h"
 
 #define CALLBACK_SIGNATURE void (*callback)(String topic, String message)
+#define CLIENTID_BUFFER_SIZE 50
 #define TOPIC_BUFFER_SIZE 100
 #define MESSAGE_BUFFER_SIZE 500
 #define CALLBACK_LIST_SIZE 50
@@ -35,6 +36,8 @@ public:
 	void setSubscribePrefix(String prefix);
 	void setPublishPrefix(String prefix);
 
+	bool connect(String clientId);
+	bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
 	void publish(String topic, String message);
 	void subscribe(String topic, CALLBACK_SIGNATURE);
 	int resubscribe();
