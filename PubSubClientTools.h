@@ -39,6 +39,7 @@ public:
 	bool connect(String clientId);
 	bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
 	void publish(String topic, String message);
+	void publish(String topic, String message, bool retained);
 	void subscribe(String topic, CALLBACK_SIGNATURE);
 	int resubscribe();
 

@@ -24,6 +24,9 @@ bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, 
 }
 
 void PubSubClientTools::publish(String topic, String message) {
+	this->publish(topic, message, false);
+}
+void PubSubClientTools::publish(String topic, String message, bool retained) {
 	topic = prefix_publish+topic;
 
 	char topic_char[TOPIC_BUFFER_SIZE];
@@ -32,7 +35,7 @@ void PubSubClientTools::publish(String topic, String message) {
 	topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
 	message.toCharArray(msg_char, MESSAGE_BUFFER_SIZE);
 
-	pubSub->publish(topic_char, msg_char); 
+	pubSub->publish(topic_char, msg_char, retained);
 }
 
 void PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
