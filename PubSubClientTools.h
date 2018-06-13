@@ -11,10 +11,18 @@
 #include "PubSubClient.h"
 
 #define CALLBACK_SIGNATURE void (*callback)(String topic, String message)
+#ifndef CLIENTID_BUFFER_SIZE
 #define CLIENTID_BUFFER_SIZE 50
+#endif
+#ifndef TOPIC_BUFFER_SIZE
 #define TOPIC_BUFFER_SIZE 100
+#endif
+#ifndef MESSAGE_BUFFER_SIZE
 #define MESSAGE_BUFFER_SIZE 500
+#endif
+#ifndef CALLBACK_LIST_SIZE
 #define CALLBACK_LIST_SIZE 50
+#endif
 
 struct callbackTopic {
 	String topic;
