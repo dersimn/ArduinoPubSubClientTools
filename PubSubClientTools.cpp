@@ -1,5 +1,6 @@
 #include "PubSubClientTools.h"
 
+// Public
 PubSubClientTools::PubSubClientTools(PubSubClient& _pubSub) {
     pubSub = &_pubSub;
     pubSub->setCallback(mqtt_callback);
@@ -10,7 +11,6 @@ bool PubSubClientTools::connect(String clientId) {
     clientId.toCharArray(client_char, CLIENTID_BUFFER_SIZE);
     return pubSub->connect(client_char);
 }
-
 bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage) {
     char client_char[CLIENTID_BUFFER_SIZE];
     char topic_char[TOPIC_BUFFER_SIZE];
@@ -49,20 +49,6 @@ bool PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
     return pubSub->subscribe(topic_char);
 }
 
-void PubSubClientTools::_callback(char* topic_char, byte* payload, unsigned int length) {
-    String topic = String(topic_char);
-    String message = "";
-    for (int i = 0; i < length; i++) {
-        message += (char)payload[i];
-    }
-
-    for (int i = 0; i < callbackCount; i++) {
-        if ( topic == callbackList[i].topic ) {
-            (*callbackList[i].callback)(topic,message);
-        }
-    }
-}
-
 int PubSubClientTools::resubscribe() {
     int count = 0;
 
@@ -77,4 +63,19 @@ int PubSubClientTools::resubscribe() {
         }
     }
     return count;
+}
+
+// Private
+void PubSubClientTools::callback(char* topic_char, byte* payload, unsigned int length) {
+    String topic = String(topic_char);
+    String message = "";
+    for (int i = 0; i < length; i++) {
+        message += (char)payload[i];
+    }
+
+    for (int i = 0; i < callbackCount; i++) {
+        if ( topic == callbackList[i].topic ) {
+            (*callbackList[i].callback)(topic,message);
+        }
+    }
 }

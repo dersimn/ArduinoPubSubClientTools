@@ -34,17 +34,21 @@ class PubSubClientTools {
         PubSubClient* pubSub;
         struct callbackTopic callbackList[CALLBACK_LIST_SIZE];
         int callbackCount = 0;
-        std::function<void(char*, unsigned char*, unsigned int)> mqtt_callback = std::bind(&PubSubClientTools::_callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-        void _callback(char* topic_char, byte* payload, unsigned int length);
+
+        std::function<void(char*, unsigned char*, unsigned int)> mqtt_callback = std::bind(&PubSubClientTools::callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+        void callback(char* topic_char, byte* payload, unsigned int length);
 
     public:
         PubSubClientTools(PubSubClient& pubSub);
 
         bool connect(String clientId);
         bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
+
         bool publish(String topic, String message);
         bool publish(String topic, String message, bool retained);
+
         bool subscribe(String topic, CALLBACK_SIGNATURE);
+
         int resubscribe();
 };
 
