@@ -27,8 +27,6 @@ bool PubSubClientTools::publish(String topic, String message) {
     return this->publish(topic, message, false);
 }
 bool PubSubClientTools::publish(String topic, String message, bool retained) {
-    topic = topic;
-
     char topic_char[TOPIC_BUFFER_SIZE];
     char msg_char[MESSAGE_BUFFER_SIZE];
 
@@ -40,8 +38,6 @@ bool PubSubClientTools::publish(String topic, String message, bool retained) {
 
 bool PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
     if (callbackCount >= CALLBACK_LIST_SIZE) return false;
-    
-    topic = topic;
 
     char topic_char[TOPIC_BUFFER_SIZE];
     topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
