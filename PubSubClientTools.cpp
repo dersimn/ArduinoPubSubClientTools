@@ -65,6 +65,7 @@ int PubSubClientTools::resubscribe() {
     return count;
 }
 
+// Static helper functions
 int PubSubClientTools::explode(String *results, String source, char delimiter) {
     int count = 0;
     int index = 0;
@@ -85,10 +86,10 @@ bool PubSubClientTools::wildcardMatch(String topic, String wildcard) {
     if (wildcard == "#") return true;
 
     String exploded_topic[TOPIC_BUFFER_SIZE];
-    int exploded_topic_count = explode(exploded_topic, topic, '/');
+    int exploded_topic_count = PubSubClientTools::explode(exploded_topic, topic, '/');
 
     String exploded_wildcard[TOPIC_BUFFER_SIZE];
-    int exploded_wildcard_count = explode(exploded_wildcard, wildcard, '/');
+    int exploded_wildcard_count = PubSubClientTools::explode(exploded_wildcard, wildcard, '/');
 
     // Impossible to match since wildcard "+/+/#" is not matched by topic foo/bar
     if (exploded_wildcard_count > exploded_topic_count) return false;
@@ -126,7 +127,7 @@ void PubSubClientTools::callback(char* topic_char, byte* payload, unsigned int l
     }
 
     for (int i = 0; i < callbackCount; i++) {
-        if (this->wildcardMatch(topic, callbackList[i].topic)) {
+        if (PubSubClientTools::wildcardMatch(topic, callbackList[i].topic)) {
             (*callbackList[i].callback)(topic,message);
         }
     }

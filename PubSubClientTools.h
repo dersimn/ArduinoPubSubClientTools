@@ -51,8 +51,9 @@ class PubSubClientTools {
 
         int resubscribe();
 
-        int explode(String *results, String source, char delimiter);
-        bool wildcardMatch(String topic, String wildcard);
+        // Static helper functions
+        static int explode(String *results, String source, char delimiter);
+        static bool wildcardMatch(String topic, String wildcard);
 };
 
 #endif
