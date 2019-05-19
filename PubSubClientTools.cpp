@@ -23,10 +23,10 @@ bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, 
     return pubSub->connect(client_char, topic_char, willQoS, willRetain, msg_char);
 }
 
-void PubSubClientTools::publish(String topic, String message) {
-    this->publish(topic, message, false);
+bool PubSubClientTools::publish(String topic, String message) {
+    return this->publish(topic, message, false);
 }
-void PubSubClientTools::publish(String topic, String message, bool retained) {
+bool PubSubClientTools::publish(String topic, String message, bool retained) {
     topic = topic;
 
     char topic_char[TOPIC_BUFFER_SIZE];
@@ -35,10 +35,12 @@ void PubSubClientTools::publish(String topic, String message, bool retained) {
     topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
     message.toCharArray(msg_char, MESSAGE_BUFFER_SIZE);
 
-    pubSub->publish(topic_char, msg_char, retained);
+    return pubSub->publish(topic_char, msg_char, retained);
 }
 
-void PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
+bool PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
+    if (callbackCount >= CALLBACK_LIST_SIZE) return false;
+    
     topic = topic;
 
     char topic_char[TOPIC_BUFFER_SIZE];
@@ -48,7 +50,7 @@ void PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
     callbackList[callbackCount].callback = callback;
     callbackCount++;
 
-    pubSub->subscribe(topic_char);
+    return pubSub->subscribe(topic_char);
 }
 
 void PubSubClientTools::_callback(char* topic_char, byte* payload, unsigned int length) {
