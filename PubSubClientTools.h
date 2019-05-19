@@ -35,14 +35,9 @@ class PubSubClientTools {
         struct callbackTopic callbackList[CALLBACK_LIST_SIZE];
         int callbackCount = 0;
         std::function<void(char*, unsigned char*, unsigned int)> mqtt_callback = std::bind(&PubSubClientTools::_callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-        String prefix_publish;
-        String prefix_subscribe;
 
     public:
         PubSubClientTools(PubSubClient& pubSub);
-
-        void setSubscribePrefix(String prefix);
-        void setPublishPrefix(String prefix);
 
         bool connect(String clientId);
         bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);

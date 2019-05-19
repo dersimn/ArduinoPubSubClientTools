@@ -27,7 +27,7 @@ void PubSubClientTools::publish(String topic, String message) {
     this->publish(topic, message, false);
 }
 void PubSubClientTools::publish(String topic, String message, bool retained) {
-    topic = prefix_publish+topic;
+    topic = topic;
 
     char topic_char[TOPIC_BUFFER_SIZE];
     char msg_char[MESSAGE_BUFFER_SIZE];
@@ -39,7 +39,7 @@ void PubSubClientTools::publish(String topic, String message, bool retained) {
 }
 
 void PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
-    topic = prefix_subscribe+topic;
+    topic = topic;
 
     char topic_char[TOPIC_BUFFER_SIZE];
     topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
@@ -79,11 +79,4 @@ int PubSubClientTools::resubscribe() {
         }
     }
     return count;
-}
-
-void PubSubClientTools::setSubscribePrefix(String prefix) {
-    prefix_subscribe = prefix;
-}
-void PubSubClientTools::setPublishPrefix(String prefix) {
-    prefix_publish = prefix;
 }
