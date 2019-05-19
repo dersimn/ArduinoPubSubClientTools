@@ -2,9 +2,9 @@
 #define PubSubClientTools_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include <Arduino.h>
+    #include <Arduino.h>
 #else
-	#include <WProgram.h>
+    #include <WProgram.h>
 #endif
 
 #include <inttypes.h>
@@ -25,33 +25,33 @@
 #endif
 
 struct callbackTopic {
-	String topic;
-	void (*callback)(String topic, String message);
+    String topic;
+    void (*callback)(String topic, String message);
 };
 
 class PubSubClientTools {
-private:
-	PubSubClient* pubSub;
-	struct callbackTopic callbackList[CALLBACK_LIST_SIZE];
-	int callbackCount = 0;
-	std::function<void(char*, unsigned char*, unsigned int)> mqtt_callback = std::bind(&PubSubClientTools::_callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	String prefix_publish;
-	String prefix_subscribe;
+    private:
+        PubSubClient* pubSub;
+        struct callbackTopic callbackList[CALLBACK_LIST_SIZE];
+        int callbackCount = 0;
+        std::function<void(char*, unsigned char*, unsigned int)> mqtt_callback = std::bind(&PubSubClientTools::_callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+        String prefix_publish;
+        String prefix_subscribe;
 
-public:
-	PubSubClientTools(PubSubClient& pubSub);
+    public:
+        PubSubClientTools(PubSubClient& pubSub);
 
-	void setSubscribePrefix(String prefix);
-	void setPublishPrefix(String prefix);
+        void setSubscribePrefix(String prefix);
+        void setPublishPrefix(String prefix);
 
-	bool connect(String clientId);
-	bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
-	void publish(String topic, String message);
-	void publish(String topic, String message, bool retained);
-	void subscribe(String topic, CALLBACK_SIGNATURE);
-	int resubscribe();
+        bool connect(String clientId);
+        bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
+        void publish(String topic, String message);
+        void publish(String topic, String message, bool retained);
+        void subscribe(String topic, CALLBACK_SIGNATURE);
+        int resubscribe();
 
-	void _callback(char* topic_char, byte* payload, unsigned int length);
+        void _callback(char* topic_char, byte* payload, unsigned int length);
 };
 
 #endif
