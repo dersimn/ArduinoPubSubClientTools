@@ -50,6 +50,9 @@ class PubSubClientTools {
         bool subscribe(String topic, CALLBACK_SIGNATURE);
 
         int resubscribe();
+
+        int explode(String *results, String source, char delimiter);
+        bool wildcardMatch(String topic, String wildcard);
 };
 
 #endif
