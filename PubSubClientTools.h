@@ -27,7 +27,7 @@ struct callbackTopic {
 
 class PubSubClientTools {
     private:
-        PubSubClient* pubSub;
+        PubSubClient& pubSub;
         struct callbackTopic callbackList[CALLBACK_LIST_SIZE];
         int callbackCount = 0;
 

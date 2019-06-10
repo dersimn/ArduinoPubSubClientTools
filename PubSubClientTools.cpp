@@ -1,15 +1,14 @@
 #include "PubSubClientTools.h"
 
 // Public
-PubSubClientTools::PubSubClientTools(PubSubClient& _pubSub) {
-    pubSub = &_pubSub;
-    pubSub->setCallback(mqtt_callback);
+PubSubClientTools::PubSubClientTools(PubSubClient& _pubSub) : pubSub(_pubSub) {
+    pubSub.setCallback(mqtt_callback);
 };
 
 bool PubSubClientTools::connect(String clientId) {
     char client_char[CLIENTID_BUFFER_SIZE];
     clientId.toCharArray(client_char, CLIENTID_BUFFER_SIZE);
-    return pubSub->connect(client_char);
+    return pubSub.connect(client_char);
 }
 bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage) {
     char client_char[CLIENTID_BUFFER_SIZE];
@@ -20,7 +19,7 @@ bool PubSubClientTools::connect(String clientId, String willTopic, int willQoS, 
     willTopic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
     willMessage.toCharArray(msg_char, MESSAGE_BUFFER_SIZE);
 
-    return pubSub->connect(client_char, topic_char, willQoS, willRetain, msg_char);
+    return pubSub.connect(client_char, topic_char, willQoS, willRetain, msg_char);
 }
 
 bool PubSubClientTools::publish(String topic, String message) {
@@ -33,7 +32,7 @@ bool PubSubClientTools::publish(String topic, String message, bool retained) {
     topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
     message.toCharArray(msg_char, MESSAGE_BUFFER_SIZE);
 
-    return pubSub->publish(topic_char, msg_char, retained);
+    return pubSub.publish(topic_char, msg_char, retained);
 }
 
 bool PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
@@ -46,19 +45,19 @@ bool PubSubClientTools::subscribe(String topic, CALLBACK_SIGNATURE) {
     callbackList[callbackCount].callback = callback;
     callbackCount++;
 
-    return pubSub->subscribe(topic_char);
+    return pubSub.subscribe(topic_char);
 }
 
 int PubSubClientTools::resubscribe() {
     int count = 0;
 
-    pubSub->setCallback(mqtt_callback);
+    pubSub.setCallback(mqtt_callback);
 
     for (int i = 0; i < callbackCount; i++) {
         char topic_char[TOPIC_BUFFER_SIZE];
         callbackList[i].topic.toCharArray(topic_char, TOPIC_BUFFER_SIZE);
 
-        if ( pubSub->subscribe(topic_char) ) {
+        if ( pubSub.subscribe(topic_char) ) {
             count++;
         }
     }
