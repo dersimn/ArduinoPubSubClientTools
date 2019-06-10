@@ -1,6 +1,10 @@
 #ifndef PubSubClientTools_h
 #define PubSubClientTools_h
 
+#if !defined(ESP8266) && !defined(ESP32)
+#warning This library was developed for ESP8266 and ESP32 microcontrollers
+#endif
+
 #include <Arduino.h>
 
 #include <inttypes.h>
