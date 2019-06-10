@@ -65,8 +65,8 @@ int PubSubClientTools::resubscribe() {
 }
 
 // Private
-void PubSubClientTools::callback(char* topic_char, byte* payload, unsigned int length) {
-    String topic = String(topic_char);
+void PubSubClientTools::callback(PUBSUBCLIENT_CALLBACK_PARAMETERS) {
+    String topic = String(topicChar);
     String message = "";
     for (int i = 0; i < length; i++) {
         message += (char)payload[i];
