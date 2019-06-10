@@ -5,6 +5,7 @@
 
 #include <inttypes.h>
 #include "PubSubClient.h"
+#include "MqttWildcard.h"
 
 #define CALLBACK_SIGNATURE void (*callback)(String topic, String message)
 #ifndef CLIENTID_BUFFER_SIZE
@@ -46,10 +47,6 @@ class PubSubClientTools {
         bool subscribe(String topic, CALLBACK_SIGNATURE);
 
         int resubscribe();
-
-        // Static helper functions
-        static int explode(String *results, String source, char delimiter);
-        static bool wildcardMatch(String topic, String wildcard);
 };
 
 #endif
