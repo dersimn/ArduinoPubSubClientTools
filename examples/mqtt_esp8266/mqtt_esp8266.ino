@@ -17,7 +17,7 @@ ThreadController threadControl = ThreadController();
 Thread thread = Thread();
 
 int value = 0;
-String s = "";
+const String s = "";
 
 void setup() {
   Serial.begin(115200);
