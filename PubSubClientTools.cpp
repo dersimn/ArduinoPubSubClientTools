@@ -5,6 +5,9 @@ PubSubClientTools::PubSubClientTools(PubSubClient& _pubSub) : pubSub(_pubSub) {
     pubSub.setCallback(mqtt_callback);
 };
 
+bool PubSubClientTools::connected() {
+    return pubSub.connected();
+}
 bool PubSubClientTools::connect(String clientId) {
     char client_char[CLIENTID_BUFFER_SIZE];
     clientId.toCharArray(client_char, CLIENTID_BUFFER_SIZE);

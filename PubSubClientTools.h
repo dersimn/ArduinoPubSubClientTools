@@ -44,6 +44,7 @@ class PubSubClientTools {
     public:
         PubSubClientTools(PubSubClient& pubSub);
 
+        bool connected();
         bool connect(String clientId);
         bool connect(String clientId, String willTopic, int willQoS, bool willRetain, String willMessage);
 
